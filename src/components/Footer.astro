@@ -1,0 +1,105 @@
+<footer class="w-full bg-canvas border-t border-hairline pt-16 pb-12 mt-20">
+  <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-hairline">
+      <!-- Column 1: Brand -->
+      <div class="col-span-2 flex flex-col gap-4">
+        <a href="/" class="flex items-center gap-2 group w-fit" aria-label="fairrentcalc Homepage">
+          <svg class="w-5 h-5" viewBox="0 0 115 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M57.5 0L115 100H0L57.5 0Z" fill="currentColor"></path>
+          </svg>
+          <span class="font-sans font-semibold tracking-display-sm text-[16px]">
+            fairrentcalc<span class="text-link">.com</span>
+          </span>
+        </a>
+        <p class="text-body text-sm max-w-xs leading-relaxed" data-i18n="footer.description">
+          Open-source, developer-grade digital calculations for room dividing, screen scaling, and fair rental valuation.
+        </p>
+      </div>
+
+      <!-- Column 2: Tools -->
+      <div class="flex flex-col gap-3">
+        <span class="font-mono text-xs font-medium tracking-wider text-hairline-strong uppercase select-none" data-i18n="footer.tools">
+          Tools
+        </span>
+        <ul class="flex flex-col gap-2">
+          <li>
+            <a href="/split" class="text-body hover:text-ink text-sm transition-colors" data-i18n="nav.splitter">Rent Splitter</a>
+          </li>
+          <li>
+            <a href="/calibrate" class="text-body hover:text-ink text-sm transition-colors" data-i18n="nav.calibrator">Device Calibrator</a>
+          </li>
+          <li>
+            <a href="/evaluate" class="text-body hover:text-ink text-sm transition-colors" data-i18n="nav.evaluator">Listing Evaluator</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Competitors -->
+      <div class="flex flex-col gap-3">
+        <span class="font-mono text-xs font-medium tracking-wider text-hairline-strong uppercase select-none" data-i18n="footer.competitors">
+          Competitors
+        </span>
+        <ul class="flex flex-col gap-2">
+          <li>
+            <a 
+              href="https://www.splitwise.com/calculators/rent" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="text-body hover:text-ink text-sm transition-colors flex items-center gap-1"
+            >
+              Splitwise Rent ↗
+            </a>
+          </li>
+          <li>
+            <a 
+              href="https://www.cribapp.com/resources/fair-rental-determination-calculation" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="text-body hover:text-ink text-sm transition-colors flex items-center gap-1"
+            >
+              Cribapp determination ↗
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 4: System -->
+      <div class="flex flex-col gap-3">
+        <span class="font-mono text-xs font-medium tracking-wider text-hairline-strong uppercase select-none" data-i18n="footer.system">
+          System
+        </span>
+        <ul class="flex flex-col gap-2">
+          <li>
+            <span class="text-body text-sm select-none">
+              Astro 6.0 + Vite
+            </span>
+          </li>
+          <li>
+            <span class="text-body text-sm select-none">
+              Tailwind CSS v4
+            </span>
+          </li>
+          <li>
+            <span class="text-body text-sm select-none">
+              Vercel Design Language
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-xs text-mute font-mono">
+        <span>© {new Date().getFullYear()} fairrentcalc.com.</span>
+        <span>•</span>
+        <span data-i18n="footer.copyright">Built with absolute mathematical accuracy.</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-mono">
+        <a href="/calibrate" class="text-mute hover:text-ink transition-colors" data-i18n="footer.calibration">
+          Calibration Status: Calibrated
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

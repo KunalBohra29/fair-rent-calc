@@ -1,0 +1,339 @@
+---
+const pathname = Astro.url.pathname;
+const isCurrent = (path: string) => {
+  if (path === '/' && pathname === '/') return true;
+  if (path !== '/' && pathname.startsWith(path)) return true;
+  return false;
+};
+---
+
+<header class="sticky top-0 z-40 w-full h-16 border-b border-hairline bg-canvas/80 backdrop-blur-md">
+  <div class="max-w-[1400px] h-full mx-auto px-4 md:px-8 flex items-center justify-between">
+    <!-- Logo & Brand -->
+    <a href="/" class="flex items-center gap-2 group focus-visible-vercel" aria-label="fairrentcalc Homepage">
+      <svg class="w-5 h-5 transition-transform duration-200 group-hover:scale-105" viewBox="0 0 115 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M57.5 0L115 100H0L57.5 0Z" fill="currentColor"></path>
+      </svg>
+      <span class="font-sans font-semibold tracking-display-sm text-[16px] select-none">
+        fairrentcalc<span class="text-link">.com</span>
+      </span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <nav class="hidden md:flex items-center gap-1" aria-label="Main Navigation">
+      <a 
+        href="/split" 
+        class={`px-3 py-1.5 text-sm font-medium rounded-full transition-colors focus-visible-vercel ${
+          isCurrent('/split') 
+            ? 'bg-canvas-soft text-ink' 
+            : 'text-body hover:text-ink hover:bg-canvas-soft/50'
+        }`}
+        aria-current={isCurrent('/split') ? 'page' : undefined}
+        data-i18n="nav.splitter"
+      >
+        Rent Splitter
+      </a>
+      <a 
+        href="/calibrate" 
+        class={`px-3 py-1.5 text-sm font-medium rounded-full transition-colors focus-visible-vercel ${
+          isCurrent('/calibrate') 
+            ? 'bg-canvas-soft text-ink' 
+            : 'text-body hover:text-ink hover:bg-canvas-soft/50'
+        }`}
+        aria-current={isCurrent('/calibrate') ? 'page' : undefined}
+        data-i18n="nav.calibrator"
+      >
+        Device Calibrator
+      </a>
+      <a 
+        href="/evaluate" 
+        class={`px-3 py-1.5 text-sm font-medium rounded-full transition-colors focus-visible-vercel ${
+          isCurrent('/evaluate') 
+            ? 'bg-canvas-soft text-ink' 
+            : 'text-body hover:text-ink hover:bg-canvas-soft/50'
+        }`}
+        aria-current={isCurrent('/evaluate') ? 'page' : undefined}
+        data-i18n="nav.evaluator"
+      >
+        Listing Evaluator
+      </a>
+    </nav>
+
+    <!-- CTAs and Controls -->
+    <div class="hidden md:flex items-center gap-2">
+      <!-- Language Selector -->
+      <div class="relative">
+        <button 
+          id="lang-toggle"
+          class="w-8 h-8 flex items-center justify-center border border-hairline bg-canvas hover:bg-canvas-soft rounded-sm transition-all focus-visible-vercel shadow-level-1 text-ink"
+          aria-label="Select language"
+          aria-expanded="false"
+          aria-controls="lang-dropdown"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+          </svg>
+        </button>
+        <div 
+          id="lang-dropdown"
+          class="hidden absolute right-0 top-full mt-1 w-40 bg-canvas border border-hairline rounded-sm shadow-level-5 py-1 z-50"
+        >
+          <button data-lang="en" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇺🇸</span> English
+          </button>
+          <button data-lang="es" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇪🇸</span> Español
+          </button>
+          <button data-lang="fr" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇫🇷</span> Français
+          </button>
+          <button data-lang="de" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇩🇪</span> Deutsch
+          </button>
+          <button data-lang="hi" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇮🇳</span> हिन्दी
+          </button>
+          <button data-lang="zh" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇨🇳</span> 中文
+          </button>
+        </div>
+      </div>
+
+      <!-- Dark Mode Toggle -->
+      <button 
+        id="theme-toggle"
+        class="w-8 h-8 flex items-center justify-center border border-hairline bg-canvas hover:bg-canvas-soft rounded-sm transition-all focus-visible-vercel shadow-level-1 text-ink"
+        aria-label="Toggle dark mode"
+      >
+        <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg id="icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      </button>
+      <a 
+        href="/calibrate" 
+        class="h-7 px-3 flex items-center justify-center border border-hairline bg-canvas hover:bg-canvas-soft text-ink text-xs font-semibold rounded-sm transition-all focus-visible-vercel shadow-level-1"
+        data-i18n="nav.calibrate"
+      >
+        Calibrate Screen
+      </a>
+      <a 
+        href="/split" 
+        class="h-7 px-3 flex items-center justify-center bg-primary hover:bg-ink text-on-primary text-xs font-semibold rounded-sm transition-all focus-visible-vercel shadow-level-2"
+        data-i18n="nav.calculate"
+      >
+        Calculate Now
+      </a>
+    </div>
+
+    <!-- Mobile Navigation Toggle -->
+    <button 
+      id="mobile-nav-toggle"
+      class="md:hidden flex items-center justify-center w-8 h-8 rounded-sm hover:bg-canvas-soft border border-hairline text-ink focus-visible-vercel shadow-level-1"
+      aria-label="Toggle Navigation Menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="menu-icon-open" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+      <svg id="menu-icon-close" class="hidden w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div 
+    id="mobile-menu" 
+    class="hidden md:hidden absolute top-16 left-0 w-full bg-canvas border-b border-hairline shadow-level-3 animate-fade-in"
+    style="animation-duration: 0.15s;"
+  >
+    <nav class="flex flex-col p-4 gap-2" aria-label="Mobile Navigation Drawer">
+      <a 
+        href="/split" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/split') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+        data-i18n="nav.splitter"
+      >
+        Rent Splitter
+      </a>
+      <a 
+        href="/calibrate" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/calibrate') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+        data-i18n="nav.calibrator"
+      >
+        Device Calibrator
+      </a>
+      <a 
+        href="/evaluate" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/evaluate') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+        data-i18n="nav.evaluator"
+      >
+        Listing Evaluator
+      </a>
+      <div class="h-[1px] bg-hairline my-2"></div>
+      <!-- Mobile Language & Theme Row -->
+      <div class="flex items-center gap-2 px-2 pt-2">
+        <select id="mobile-lang-select" class="flex-1 h-9 px-2 border border-hairline rounded-sm text-xs text-ink bg-canvas focus-visible-vercel">
+          <option value="en">🇺🇸 English</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="hi">🇮🇳 हिन्दी</option>
+          <option value="zh">🇨🇳 中文</option>
+        </select>
+        <button 
+          id="mobile-theme-toggle"
+          class="w-9 h-9 flex items-center justify-center border border-hairline bg-canvas hover:bg-canvas-soft rounded-sm transition-all text-ink shadow-level-1"
+          aria-label="Toggle dark mode"
+        >
+          <svg id="mobile-icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          <svg id="mobile-icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="grid grid-cols-2 gap-3 px-2 pt-2 pb-4">
+        <a 
+          href="/calibrate" 
+          class="h-9 flex items-center justify-center border border-hairline bg-canvas hover:bg-canvas-soft text-ink text-sm font-semibold rounded-sm shadow-level-1 transition-all"
+          data-i18n="nav.calibrate"
+        >
+          Calibrate Screen
+        </a>
+        <a 
+          href="/split" 
+          class="h-9 flex items-center justify-center bg-primary hover:bg-ink text-on-primary text-sm font-semibold rounded-sm shadow-level-2 transition-all"
+          data-i18n="nav.calculate"
+        >
+          Calculate Now
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('mobile-nav-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const openIcon = document.getElementById('menu-icon-open');
+    const closeIcon = document.getElementById('menu-icon-close');
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const mobileIconSun = document.getElementById('mobile-icon-sun');
+    const mobileIconMoon = document.getElementById('mobile-icon-moon');
+    const langToggle = document.getElementById('lang-toggle');
+    const langDropdown = document.getElementById('lang-dropdown');
+    const langOptions = document.querySelectorAll('.lang-option');
+    const mobileLangSelect = document.getElementById('mobile-lang-select') as HTMLSelectElement;
+
+    const translations: Record<string, Record<string, string>> = {
+      en: { 'nav.splitter': 'Rent Splitter', 'nav.calibrator': 'Device Calibrator', 'nav.evaluator': 'Listing Evaluator', 'nav.calibrate': 'Calibrate Screen', 'nav.calculate': 'Calculate Now' },
+      es: { 'nav.splitter': 'Divisor de Alquiler', 'nav.calibrator': 'Calibrador de Dispositivo', 'nav.evaluator': 'Evaluador de Anuncios', 'nav.calibrate': 'Calibrar Pantalla', 'nav.calculate': 'Calcular Ahora' },
+      fr: { 'nav.splitter': 'Répartiteur de Loyer', 'nav.calibrator': 'Calibrateur d\'Appareil', 'nav.evaluator': 'Évaluateur d\'Annonces', 'nav.calibrate': 'Calibrer l\'Écran', 'nav.calculate': 'Calculer Maintenant' },
+      de: { 'nav.splitter': 'Mietenteiler', 'nav.calibrator': 'Gerätekalibrierer', 'nav.evaluator': 'Inseratsbewerter', 'nav.calibrate': 'Bildschirm kalibrieren', 'nav.calculate': 'Jetzt berechnen' },
+      hi: { 'nav.splitter': 'किराया विभाजक', 'nav.calibrator': 'डिवाइस कैलिब्रेटर', 'nav.evaluator': 'लिस्टिंग मूल्यांकनकर्ता', 'nav.calibrate': 'स्क्रीन कैलिब्रेट करें', 'nav.calculate': 'अभी गणना करें' },
+      zh: { 'nav.splitter': '租金分割器', 'nav.calibrator': '设备校准器', 'nav.evaluator': '房源评估器', 'nav.calibrate': '校准屏幕', 'nav.calculate': '立即计算' }
+    };
+
+    function applyHeaderTranslations(lang: string) {
+      document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (key && translations[lang]?.[key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    function getLocale(): string {
+      return localStorage.getItem('locale') || 'en';
+    }
+
+    function setLocale(lang: string) {
+      localStorage.setItem('locale', lang);
+      document.documentElement.setAttribute('lang', lang);
+      applyHeaderTranslations(lang);
+      if (mobileLangSelect) mobileLangSelect.value = lang;
+      window.dispatchEvent(new CustomEvent('locale-changed', { detail: { locale: lang } }));
+    }
+
+    function updateAllThemeIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      [iconSun, mobileIconSun].forEach(el => el?.classList.toggle('hidden', !isDark));
+      [iconMoon, mobileIconMoon].forEach(el => el?.classList.toggle('hidden', isDark));
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateAllThemeIcons();
+    }
+
+    if (toggleBtn && mobileMenu && openIcon && closeIcon) {
+      toggleBtn.addEventListener('click', () => {
+        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+        mobileMenu.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    }
+
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+    if (langToggle && langDropdown) {
+      langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = langToggle.getAttribute('aria-expanded') === 'true';
+        langToggle.setAttribute('aria-expanded', String(!isExpanded));
+        langDropdown.classList.toggle('hidden');
+      });
+    }
+
+    langOptions.forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = opt.getAttribute('data-lang');
+        if (lang) {
+          setLocale(lang);
+          langDropdown?.classList.add('hidden');
+          langToggle?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    if (mobileLangSelect) {
+      mobileLangSelect.value = getLocale();
+      mobileLangSelect.addEventListener('change', () => {
+        setLocale(mobileLangSelect.value);
+      });
+    }
+
+    document.addEventListener('click', () => {
+      langDropdown?.classList.add('hidden');
+      langToggle?.setAttribute('aria-expanded', 'false');
+    });
+
+    applyHeaderTranslations(getLocale());
+    updateAllThemeIcons();
+  });
+</script>

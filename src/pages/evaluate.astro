@@ -1,0 +1,419 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Apartment Listing Evaluator — Check Rent Affordability & Fair Market Value | Fairrentcalc"
+  description="Evaluate apartment listings against fair market value using square footage and location data. Check rent affordability with the 30% rule and 50/30/20 budget breakdown."
+  canonicalUrl="https://fairrentcalc.com/evaluate"
+>
+  <div class="py-12">
+    <!-- Header -->
+    <div class="mb-12">
+      <span class="font-mono text-xs font-semibold text-link uppercase tracking-wider" data-i18n="evaluate.badge">Market Analysis</span>
+      <h1 class="text-3xl md:text-5xl font-semibold tracking-display-lg text-ink mt-2" data-i18n="evaluate.title">
+        Listing & Affordability Evaluator.
+      </h1>
+      <p class="mt-3 text-body max-w-2xl text-base" data-i18n="evaluate.subtitle">
+        Check if a listing's rent matches its true physical market value, and verify if it aligns with your group's income thresholds.
+      </p>
+    </div>
+
+    <!-- Main Content Divider Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      
+      <!-- Column 1: Personal Affordability -->
+      <div class="bg-canvas border border-hairline rounded-md p-6 shadow-level-2 space-y-6">
+        <h2 class="text-lg font-semibold tracking-display-md text-ink pb-3 border-b border-hairline flex items-center justify-between">
+          <span data-i18n="evaluate.income">1. Income & Affordability Bound</span>
+          <span class="font-mono text-xs text-hairline-strong" data-i18n="evaluate.income.group">Group Total</span>
+        </h2>
+
+        <!-- Monthly Income Input -->
+        <div class="space-y-2">
+          <label for="monthly-income" class="block text-xs font-mono font-medium text-hairline-strong uppercase" data-i18n="evaluate.income.label">
+            Combined Gross Monthly Income
+          </label>
+          <div class="relative rounded-sm shadow-level-1">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-mute font-mono text-sm pointer-events-none">$</span>
+            <input 
+              type="number" 
+              id="monthly-income" 
+              value="8000" 
+              min="1" 
+              class="w-full h-10 pl-8 pr-4 border border-hairline rounded-sm text-sm text-ink focus-visible-vercel bg-canvas tabular-nums"
+              placeholder="8000"
+              aria-label="Combined Gross Monthly Income"
+            />
+          </div>
+          <p class="text-[11px] text-mute" data-i18n="evaluate.income.desc">Total combined income of all roommates before taxes.</p>
+        </div>
+
+        <!-- Safe Rent Recommendation Box -->
+        <div class="space-y-4 pt-4 border-t border-hairline">
+            <span class="block text-xs font-mono font-medium text-hairline-strong uppercase" data-i18n="evaluate.thresholds">
+            Affordability Thresholds (30% Rule)
+          </span>
+
+          <div class="grid grid-cols-3 gap-3">
+            
+            <!-- Under 30%: Safe -->
+            <div class="p-3 bg-canvas-soft-2 border border-hairline rounded-sm text-center">
+              <span class="text-[10px] font-mono text-mute block uppercase" data-i18n="evaluate.threshold.safe">Safe (30%)</span>
+              <span id="threshold-safe" class="text-sm font-semibold text-link tabular-nums mt-1 block">$2,400</span>
+            </div>
+
+            <!-- 30% - 40%: Stretched -->
+            <div class="p-3 bg-canvas-soft-2 border border-hairline rounded-sm text-center">
+              <span class="text-[10px] font-mono text-mute block uppercase" data-i18n="evaluate.threshold.stretched">Stretched (40%)</span>
+              <span id="threshold-stretched" class="text-sm font-semibold text-warning tabular-nums mt-1 block">$3,200</span>
+            </div>
+
+            <!-- Over 40%: High Risk -->
+            <div class="p-3 bg-canvas-soft-2 border border-hairline rounded-sm text-center">
+              <span class="text-[10px] font-mono text-mute block uppercase" data-i18n="evaluate.threshold.risk">High Risk (50%)</span>
+              <span id="threshold-risk" class="text-sm font-semibold text-error tabular-nums mt-1 block">$4,000</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 50/30/20 Budgeting Rule breakdown -->
+        <div class="bg-canvas-soft border border-hairline rounded-sm p-4 space-y-3">
+          <span class="block text-xs font-mono font-medium text-ink uppercase" data-i18n="evaluate.budget.title">
+            50/30/20 Monthly Allocation Breakdown
+          </span>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between">
+              <span class="text-body" data-i18n="evaluate.budget.essentials">Essentials (50% — Rent, food, utilities):</span>
+              <span id="alloc-essentials" class="font-mono text-ink font-semibold">$4,000.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-body" data-i18n="evaluate.budget.wants">Wants (30% — Entertainment, dining out):</span>
+              <span id="alloc-wants" class="font-mono text-ink font-semibold">$2,400.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-body" data-i18n="evaluate.budget.savings">Savings & Debt (20% — Financial goals):</span>
+              <span id="alloc-savings" class="font-mono text-ink font-semibold">$1,600.00</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Column 2: Listing Value Estimator -->
+      <div class="bg-canvas border border-hairline rounded-md p-6 shadow-level-2 space-y-6">
+        <h2 class="text-lg font-semibold tracking-display-md text-ink pb-3 border-b border-hairline flex items-center justify-between">
+          <span data-i18n="evaluate.listing">2. Listing Fair Market Valuation</span>
+          <span class="font-mono text-xs text-hairline-strong" data-i18n="evaluate.listing.appraisal">Appraisal parameters</span>
+        </h2>
+
+        <!-- Grid of listing details -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Listing Price -->
+          <div>
+            <label for="listing-price" class="block text-xs font-mono font-medium text-hairline-strong uppercase mb-1.5" data-i18n="evaluate.listing.price">
+              Listed Monthly Rent
+            </label>
+            <div class="relative rounded-sm shadow-level-1">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-mute font-mono text-sm pointer-events-none">$</span>
+              <input 
+                type="number" 
+                id="listing-price" 
+                value="2800" 
+                min="1" 
+                class="w-full h-8 pl-7 pr-3 border border-hairline rounded-sm text-xs font-mono text-ink focus-visible-vercel bg-canvas tabular-nums"
+                aria-label="Listed Monthly Rent"
+              />
+            </div>
+          </div>
+
+          <!-- Listing Sqft -->
+          <div>
+            <label for="listing-size" class="block text-xs font-mono font-medium text-hairline-strong uppercase mb-1.5" data-i18n="evaluate.listing.size">
+              Apartment Size (sq ft)
+            </label>
+            <div class="relative rounded-sm shadow-level-1">
+              <input 
+                type="number" 
+                id="listing-size" 
+                value="1100" 
+                min="1" 
+                class="w-full h-8 px-3 border border-hairline rounded-sm text-xs font-mono text-ink focus-visible-vercel bg-canvas tabular-nums"
+                aria-label="Apartment Size in square feet"
+              />
+              <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-mute font-mono text-[10px] pointer-events-none">SQFT</span>
+            </div>
+          </div>
+
+          <!-- Location Tier -->
+          <div>
+            <label for="location-tier" class="block text-xs font-mono font-medium text-hairline-strong uppercase mb-1.5" data-i18n="evaluate.listing.tier">
+              Location Tier
+            </label>
+            <select 
+              id="location-tier" 
+              class="w-full h-8 px-2 border border-hairline rounded-sm text-xs font-sans text-ink focus-visible-vercel bg-canvas"
+              aria-label="Location Tier"
+            >
+              <option value="prime">Prime (Downtown, Beachfront - $3.50/sqft)</option>
+              <option value="mid" selected>Mid-Tier (Suburbs, Mid-town - $2.50/sqft)</option>
+              <option value="budget">Budget (Outskirts, Rural - $1.50/sqft)</option>
+            </select>
+          </div>
+
+          <!-- Surcharges / Amenities checkboxes -->
+          <div>
+            <label class="block text-xs font-mono font-medium text-hairline-strong uppercase mb-2" data-i18n="evaluate.amenities">
+              Included Amenities & Utilities
+            </label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center gap-1.5 text-body cursor-pointer">
+                <input type="checkbox" id="amenity-parking" checked class="accent-ink rounded-sm focus-visible-vercel" />
+                Parking (+$150)
+              </label>
+              <label class="flex items-center gap-1.5 text-body cursor-pointer">
+                <input type="checkbox" id="amenity-laundry" checked class="accent-ink rounded-sm focus-visible-vercel" />
+                In-unit laundry (+$100)
+              </label>
+              <label class="flex items-center gap-1.5 text-body cursor-pointer">
+                <input type="checkbox" id="amenity-gym" class="accent-ink rounded-sm focus-visible-vercel" />
+                Gym/Pool (+$75)
+              </label>
+              <label class="flex items-center gap-1.5 text-body cursor-pointer">
+                <input type="checkbox" id="amenity-utilities" class="accent-ink rounded-sm focus-visible-vercel" />
+                Utilities incl. (+$150)
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Outcome Panel -->
+        <div class="pt-6 border-t border-hairline space-y-6">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-4 p-5 bg-canvas-soft-2 border border-hairline rounded-sm">
+            <div>
+              <span class="text-[10px] font-mono text-hairline-strong uppercase block">Listing Score</span>
+              <div id="valuation-label" class="text-xl font-semibold tracking-display-sm text-ink mt-1">
+                Calculating…
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] font-mono text-hairline-strong uppercase block">Estimated Fair Rent</span>
+              <div id="fair-rent-label" class="text-2xl font-semibold text-link tabular-nums mt-1">
+                --
+              </div>
+            </div>
+          </div>
+
+          <!-- Explanation meter details -->
+          <div class="space-y-4">
+            <span class="block text-xs font-mono font-medium text-hairline-strong uppercase">
+              Income Affordability Diagnostic
+            </span>
+            <div class="flex items-center gap-3">
+              <div id="affordability-badge" class="px-2.5 py-1 text-xs font-semibold rounded-full select-none">
+                Checking…
+              </div>
+              <p id="affordability-explanation" class="text-xs text-body leading-relaxed">
+                Checking budget bounds…
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Live comparison chart block -->
+    <div class="mt-8 bg-canvas border border-hairline rounded-md p-6 shadow-level-2">
+      <h2 class="text-lg font-semibold tracking-display-md text-ink mb-6 pb-3 border-b border-hairline">
+        Listing Cost vs. Estimated Market Fair Value
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- Text details -->
+        <div class="space-y-4">
+          <p class="text-sm text-body leading-relaxed">
+            We evaluate the listed monthly price against the physical attributes of the apartment. Our model computes the base rent by multiplying square footage by location-tier coefficient, then adds custom market-average surcharges for utility/amenity packages.
+          </p>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="flex justify-between border-b border-hairline pb-1.5">
+              <span class="text-mute">Listed Rent per SQFT:</span>
+              <span id="output-listed-sqft" class="text-ink font-semibold tabular-nums">--</span>
+            </div>
+            <div class="flex justify-between border-b border-hairline pb-1.5">
+              <span class="text-mute">Fair Value per SQFT:</span>
+              <span id="output-fair-sqft" class="text-ink font-semibold tabular-nums">--</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-mute">Value Variance:</span>
+              <span id="output-variance" class="text-ink font-semibold tabular-nums">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparative progress meter -->
+        <div class="p-6 bg-canvas-soft-2 border border-hairline rounded-sm space-y-4">
+          <span class="block text-xs font-mono font-medium text-hairline-strong uppercase">
+            Market Comparison Meter
+          </span>
+          <div class="w-full h-4 bg-canvas border border-hairline rounded-full relative overflow-hidden flex">
+            <!-- Steal block (green/blue color range) -->
+            <div class="h-full bg-link/10 w-1/3 border-r border-hairline flex items-center justify-center text-[9px] font-mono text-link font-semibold select-none">Steal</div>
+            <!-- Fair block -->
+            <div class="h-full bg-warning/10 w-1/3 border-r border-hairline flex items-center justify-center text-[9px] font-mono text-warning font-semibold select-none font-medium">Fair</div>
+            <!-- Overpriced block -->
+            <div class="h-full bg-error/10 w-1/3 flex items-center justify-center text-[9px] font-mono text-error font-semibold select-none">Overpriced</div>
+            
+            <!-- Indicator Pin dot -->
+            <div id="meter-pin" class="absolute top-0 bottom-0 w-2 bg-ink border-x border-canvas transition-all duration-300 shadow-level-2" style="left: 50%;"></div>
+          </div>
+          <div class="flex justify-between text-[10px] font-mono text-mute">
+            <span>-20% Underpriced</span>
+            <span>Market Fair</span>
+            <span>+20% Overpriced</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</Layout>
+
+<script>
+  // Valuation multiplier mappings
+  const TIER_COEFFICIENTS: Record<string, number> = {
+    prime: 3.50,
+    mid: 2.50,
+    budget: 1.50
+  };
+
+  // DOM Elements
+  const incomeInput = document.getElementById('monthly-income') as HTMLInputElement;
+  const listingPriceInput = document.getElementById('listing-price') as HTMLInputElement;
+  const listingSizeInput = document.getElementById('listing-size') as HTMLInputElement;
+  const locationTierSelect = document.getElementById('location-tier') as HTMLSelectElement;
+
+  const parkCheck = document.getElementById('amenity-parking') as HTMLInputElement;
+  const laundryCheck = document.getElementById('amenity-laundry') as HTMLInputElement;
+  const gymCheck = document.getElementById('amenity-gym') as HTMLInputElement;
+  const utilitiesCheck = document.getElementById('amenity-utilities') as HTMLInputElement;
+
+  // Output Elements
+  const thresholdSafe = document.getElementById('threshold-safe') as HTMLSpanElement;
+  const thresholdStretched = document.getElementById('threshold-stretched') as HTMLSpanElement;
+  const thresholdRisk = document.getElementById('threshold-risk') as HTMLSpanElement;
+
+  const allocEssentials = document.getElementById('alloc-essentials') as HTMLSpanElement;
+  const allocWants = document.getElementById('alloc-wants') as HTMLSpanElement;
+  const allocSavings = document.getElementById('alloc-savings') as HTMLSpanElement;
+
+  const valuationLabel = document.getElementById('valuation-label') as HTMLDivElement;
+  const fairRentLabel = document.getElementById('fair-rent-label') as HTMLDivElement;
+  const affordabilityBadge = document.getElementById('affordability-badge') as HTMLDivElement;
+  const affordabilityExplanation = document.getElementById('affordability-explanation') as HTMLParagraphElement;
+
+  const outputListedSqft = document.getElementById('output-listed-sqft') as HTMLSpanElement;
+  const outputFairSqft = document.getElementById('output-fair-sqft') as HTMLSpanElement;
+  const outputVariance = document.getElementById('output-variance') as HTMLSpanElement;
+  const meterPin = document.getElementById('meter-pin') as HTMLDivElement;
+
+  function evaluate() {
+    const income = Math.max(0, Number(incomeInput.value) || 0);
+    const listingPrice = Math.max(0, Number(listingPriceInput.value) || 0);
+    const listingSize = Math.max(1, Number(listingSizeInput.value) || 1);
+    const tier = locationTierSelect.value;
+
+    // 1. Calculate Personal Affordability Rules
+    const safeRent = income * 0.30;
+    const stretchedRent = income * 0.40;
+    const riskRent = income * 0.50;
+
+    thresholdSafe.textContent = `$${Math.round(safeRent).toLocaleString()}`;
+    thresholdStretched.textContent = `$${Math.round(stretchedRent).toLocaleString()}`;
+    thresholdRisk.textContent = `$${Math.round(riskRent).toLocaleString()}`;
+
+    // 50/30/20 rule
+    allocEssentials.textContent = `$${(income * 0.50).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    allocWants.textContent = `$${(income * 0.30).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    allocSavings.textContent = `$${(income * 0.20).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
+    // 2. Evaluate Listing Market Surcharges
+    let amenitySurcharge = 0;
+    if (parkCheck.checked) amenitySurcharge += 150;
+    if (laundryCheck.checked) amenitySurcharge += 100;
+    if (gymCheck.checked) amenitySurcharge += 75;
+    if (utilitiesCheck.checked) amenitySurcharge += 150;
+
+    const coef = TIER_COEFFICIENTS[tier] || 2.50;
+    const fairRentBase = listingSize * coef;
+    const fairRentValuation = fairRentBase + amenitySurcharge;
+
+    fairRentLabel.textContent = `$${Math.round(fairRentValuation).toLocaleString()}`;
+
+    // 3. Score the listing price vs. fair valuation
+    const variancePercent = ((listingPrice - fairRentValuation) / fairRentValuation) * 100;
+    
+    outputListedSqft.textContent = `$${(listingPrice / listingSize).toFixed(2)} / sq ft`;
+    outputFairSqft.textContent = `$${(fairRentValuation / listingSize).toFixed(2)} / sq ft`;
+
+    // Variance badge mapping
+    if (variancePercent < -10) {
+      valuationLabel.textContent = 'Underpriced (Great Deal)';
+      valuationLabel.className = 'text-xl font-semibold tracking-display-sm text-link mt-1';
+    } else if (variancePercent > 10) {
+      valuationLabel.textContent = 'Overpriced (High Premium)';
+      valuationLabel.className = 'text-xl font-semibold tracking-display-sm text-error mt-1';
+    } else {
+      valuationLabel.textContent = 'Fair Market Value';
+      valuationLabel.className = 'text-xl font-semibold tracking-display-sm mt-1';
+      valuationLabel.style.color = 'var(--color-warning-deep)';
+    }
+
+    if (variancePercent < 0) {
+      outputVariance.textContent = `${Math.abs(variancePercent).toFixed(1)}% Under Market`;
+      outputVariance.className = 'text-link font-semibold tabular-nums';
+    } else if (variancePercent > 0) {
+      outputVariance.textContent = `${variancePercent.toFixed(1)}% Over Market`;
+      outputVariance.className = 'text-error font-semibold tabular-nums';
+    } else {
+      outputVariance.textContent = '0% (Exact Match)';
+      outputVariance.className = 'text-body font-semibold tabular-nums';
+    }
+
+    // Set pin position in meter
+    // Center is 50%. Let's map -20% to +20% range to 0% to 100%.
+    // clamped position = 50 + (variancePercent * 2.5) -> since 20 * 2.5 = 50.
+    const pinPos = Math.max(0, Math.min(100, 50 + (variancePercent * 2.5)));
+    meterPin.style.left = `${pinPos}%`;
+
+    // 4. Calculate group income feasibility status
+    if (listingPrice <= safeRent) {
+      affordabilityBadge.textContent = 'Affordable';
+      affordabilityBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-link/10 text-link select-none';
+      affordabilityExplanation.textContent = 'This apartment fits comfortably within your group’s 30% monthly gross income threshold.';
+    } else if (listingPrice <= stretchedRent) {
+      affordabilityBadge.textContent = 'Stretched';
+      affordabilityBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-warning-soft text-warning-deep select-none';
+      affordabilityExplanation.textContent = 'Rent is stretching your budget, occupying between 30% and 40% of gross monthly income.';
+    } else {
+      affordabilityBadge.textContent = 'High Burden';
+      affordabilityBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-error-soft text-error select-none';
+      affordabilityExplanation.textContent = 'Rent exceeds 40% of gross monthly income. Significant risk of rent burden for roommate group.';
+    }
+  }
+
+  // Bind change listeners
+  incomeInput?.addEventListener('input', evaluate);
+  listingPriceInput?.addEventListener('input', evaluate);
+  listingSizeInput?.addEventListener('input', evaluate);
+  locationTierSelect?.addEventListener('change', evaluate);
+  
+  parkCheck?.addEventListener('change', evaluate);
+  laundryCheck?.addEventListener('change', evaluate);
+  gymCheck?.addEventListener('change', evaluate);
+  utilitiesCheck?.addEventListener('change', evaluate);
+
+  // Initial calculation
+  evaluate();
+</script>

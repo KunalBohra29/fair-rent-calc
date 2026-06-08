@@ -1,0 +1,429 @@
+﻿---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Screen Calibrator — Measure Floor Plans with Credit Card | Fairrentcalc"
+  description="Calibrate your screen using a credit card to measure floor plan blueprints to scale. Auto-detect PPI and screen diagonal for accurate room dimension measurements."
+  canonicalUrl="https://fairrentcalc.com/calibrate"
+>
+  <div class="py-12">
+    <!-- Header -->
+    <div class="mb-12">
+      <span class="font-mono text-xs font-semibold text-link uppercase tracking-wider" data-i18n="calibrate.badge">Step 2 of 2</span>
+      <h1 class="text-3xl md:text-5xl font-semibold tracking-display-lg text-ink mt-2" data-i18n="calibrate.title">
+        Device & Blueprint Calibrator.
+      </h1>
+      <p class="mt-3 text-body max-w-2xl text-base" data-i18n="calibrate.subtitle">
+        Calibrate your screen's physical PPI using a standard credit card. This lets you auto-detect display sizes and measure layout blueprints to scale.
+      </p>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Calibration Panel -->
+      <div class="lg:col-span-8 space-y-8">
+        
+        <!-- Credit Card Calibrator Card -->
+        <div class="bg-canvas border border-hairline rounded-md p-6 shadow-level-2">
+          <div class="flex items-center justify-between pb-3 border-b border-hairline mb-6">
+            <h2 class="text-lg font-semibold tracking-display-md text-ink" data-i18n="calibrate.card.title">
+              1. Credit Card Calibration
+            </h2>
+            <span class="font-mono text-[10px] text-hairline-strong uppercase" data-i18n="calibrate.card.format">Standard ID-1 Format</span>
+          </div>
+
+          <p class="text-sm text-body leading-relaxed mb-6" data-i18n="calibrate.card.desc">
+            Lay any physical credit card, debit card, or ID card flat against your screen. Adjust the slider until the outline below matches the physical card's edges exactly.
+          </p>
+
+          <!-- Interactive Calibration Area -->
+          <div class="flex flex-col items-center justify-center p-8 bg-canvas-soft-2 border border-hairline rounded-sm min-h-[300px]">
+            <!-- Responsive Card Outline Container -->
+            <div id="calibration-card-container" class="relative transition-all select-none">
+              <!-- Credit Card outline in glassmorphism Vercel style -->
+              <div 
+                id="calibration-card" 
+                class="w-[300px] h-[189px] border-2 border-dashed border-ink/40 bg-canvas/30 rounded-md backdrop-blur-sm relative flex flex-col justify-between p-5 text-ink/80 select-none shadow-level-2 pointer-events-none"
+              >
+                <!-- SVG Chip / Logo details on Card -->
+                <div class="flex justify-between items-start">
+                  <div class="w-10 h-8 bg-ink/10 rounded-xs border border-ink/20 flex items-center justify-center">
+                    <div class="w-6 h-5 border border-dashed border-ink/30 rounded-xs"></div>
+                  </div>
+                  <!-- Mini Vercel-like triangle emblem -->
+                  <svg class="w-6 h-6 opacity-60" viewBox="0 0 115 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M57.5 0L115 100H0L57.5 0Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+                <div class="space-y-2">
+                  <div class="h-3 bg-ink/10 rounded-sm w-3/4"></div>
+                  <div class="flex gap-4">
+                    <div class="h-2 bg-ink/10 rounded-sm w-1/4"></div>
+                    <div class="h-2 bg-ink/10 rounded-sm w-1/4"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slider Control -->
+            <div class="w-full max-w-md mt-10 space-y-2">
+              <div class="flex justify-between text-xs font-semibold text-ink">
+                <span data-i18n="calibrate.card.adjust">Adjust Width</span>
+                <span id="card-width-px" class="font-mono text-link">300 px</span>
+              </div>
+              <input 
+                type="range" 
+                id="card-scale-slider" 
+                min="150" 
+                max="600" 
+                value="300" 
+                class="w-full accent-ink cursor-ew-resize focus-visible-vercel"
+                aria-label="Scale credit card outline"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Blueprint scale measuring tool -->
+        <div class="bg-canvas border border-hairline rounded-md p-6 shadow-level-2">
+          <h2 class="text-lg font-semibold tracking-display-md text-ink pb-3 border-b border-hairline mb-6" data-i18n="calibrate.blueprint.title">
+            2. Interactive Blueprint & Blueprint Scale Tool
+          </h2>
+          
+          <p class="text-sm text-body leading-relaxed mb-4" data-i18n="calibrate.blueprint.desc">
+            Place your blueprint or room drawing over the screen (or use this screen scale to calculate distances). Set your blueprint ratio below:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label for="blueprint-ratio" class="block text-xs font-mono font-medium text-hairline-strong uppercase mb-1.5" data-i18n="calibrate.blueprint.scale">
+                Scale (1 inch on screen is)
+              </label>
+              <div class="relative rounded-sm shadow-level-1">
+                <input 
+                  type="number" 
+                  id="blueprint-ratio" 
+                  value="5" 
+                  min="0.1" 
+                  step="0.1" 
+                  class="w-full h-8 px-3 border border-hairline rounded-sm text-xs font-mono text-ink focus-visible-vercel bg-canvas tabular-nums"
+                  placeholder="5"
+                />
+                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-mute font-mono text-xs pointer-events-none">Feet</span>
+              </div>
+            </div>
+
+            <div class="flex items-end">
+              <span class="text-xs text-body" data-i18n="calibrate.blueprint.ppi">
+                Current PPI Calibration: <span id="current-ppi-label" class="font-mono font-semibold text-link">-- ppi</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Measuring Canvas Area -->
+          <div class="space-y-4">
+            <span class="block text-xs font-mono font-medium text-hairline-strong uppercase" data-i18n="calibrate.ruler">
+              Ruler Scale Pad (Tap any 2 spots to measure distance)
+            </span>
+            <div 
+              id="measure-pad" 
+              class="w-full h-48 bg-canvas-soft-2 border border-dashed border-hairline hover:border-hairline-strong rounded-sm relative cursor-crosshair flex items-center justify-center select-none"
+            >
+              <div id="measure-pad-instructions" class="text-xs text-mute font-mono pointer-events-none text-center px-4 leading-relaxed" data-i18n="calibrate.ruler.instruction">
+                Click/Tap in two separate positions on this canvas to trace a line and calculate its physical and real-world distance.
+              </div>
+              <svg id="measure-svg" class="absolute inset-0 w-full h-full pointer-events-none">
+                <!-- SVG elements will be drawn dynamically -->
+                <line id="measure-line" x1="0" y1="0" x2="0" y2="0" stroke="#0070f3" stroke-width="2" stroke-dasharray="4" class="hidden" />
+                <circle id="measure-dot1" cx="0" cy="0" r="4" fill="#0070f3" class="hidden" />
+                <circle id="measure-dot2" cx="0" cy="0" r="4" fill="#0070f3" class="hidden" />
+              </svg>
+            </div>
+            
+            <!-- Output distances -->
+            <div class="grid grid-cols-2 gap-4 p-4 bg-canvas-soft border border-hairline rounded-sm font-mono text-xs">
+              <div class="space-y-1">
+                <span class="text-mute block uppercase text-[10px]" data-i18n="calibrate.ruler.screen">Physical Screen Distance</span>
+                <span id="output-screen-distance" class="text-ink font-semibold text-sm">-- inches</span>
+              </div>
+              <div class="space-y-1">
+                <span class="text-mute block uppercase text-[10px]" data-i18n="calibrate.ruler.scaled">Blueprint Scaled Distance</span>
+                <span id="output-scaled-distance" class="text-link font-semibold text-sm">-- feet</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Right Column: Screen Diagnostics & Specs -->
+      <div class="lg:col-span-4 space-y-8 sticky top-24">
+        
+        <!-- Screen Specs Card -->
+        <div class="bg-canvas border border-hairline rounded-md p-6 shadow-level-3">
+          <h2 class="text-lg font-semibold tracking-display-md text-ink mb-6 pb-3 border-b border-hairline" data-i18n="calibrate.diagnostics">
+            Diagnostics
+          </h2>
+
+          <div class="space-y-6">
+            <!-- Screen Diagonal readout -->
+            <div class="text-center p-4 bg-canvas-soft-2 border border-hairline rounded-sm relative overflow-hidden">
+              <div class="absolute inset-0 bg-radial-gradient from-cyan/5 to-transparent blur-xl pointer-events-none"></div>
+              <span class="text-[10px] font-mono text-hairline-strong uppercase block mb-1" data-i18n="calibrate.diag.diagonal">
+                Estimated Screen Diagonal
+              </span>
+              <div id="diag-diagonal" class="text-3xl font-semibold tracking-display-lg text-link tabular-nums my-1">
+                --″
+              </div>
+              <span class="text-[10px] text-body font-mono block" data-i18n="calibrate.diag.calculated">
+                Calculated in real-time
+              </span>
+            </div>
+
+            <!-- Detailed Params -->
+            <div class="space-y-3 font-mono text-xs">
+              <span class="block text-xs font-semibold text-ink border-b border-hairline pb-1.5 select-none" data-i18n="calibrate.diag.params">
+                Device System parameters
+              </span>
+              
+              <div class="flex justify-between">
+                <span class="text-mute" data-i18n="calibrate.diag.device">Device Type:</span>
+                <span id="diag-device" class="text-ink text-right truncate max-w-[150px]">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-mute" data-i18n="calibrate.diag.dpr">Device Pixel Ratio:</span>
+                <span id="diag-dpr" class="text-ink">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-mute" data-i18n="calibrate.diag.res">Screen Resolution:</span>
+                <span id="diag-res" class="text-ink tabular-nums">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-mute" data-i18n="calibrate.diag.view">Viewport Size:</span>
+                <span id="diag-view" class="text-ink tabular-nums">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-mute" data-i18n="calibrate.diag.ppi">PPI Scale:</span>
+                <span id="diag-ppi" class="text-ink tabular-nums">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-mute" data-i18n="calibrate.diag.touch">Touch Enabled:</span>
+                <span id="diag-touch" class="text-ink">--</span>
+              </div>
+            </div>
+
+            <!-- Back to Rent Splitter Button -->
+            <a 
+              href="/split" 
+              class="w-full h-10 bg-primary hover:bg-ink text-on-primary text-sm font-semibold rounded-sm shadow-level-2 transition-all flex items-center justify-center gap-2"
+              data-i18n="calibrate.apply.cta"
+            >
+              Apply to Rent Splitter
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</Layout>
+
+<script>
+  // Standard Credit Card Size (ID-1)
+  // Width: 85.60 mm = 3.370 inches
+  // Height: 53.98 mm = 2.125 inches
+  const CARD_WIDTH_INCHES = 3.37;
+  const CARD_HEIGHT_INCHES = 2.125;
+  const CARD_ASPECT_RATIO = CARD_HEIGHT_INCHES / CARD_WIDTH_INCHES;
+
+  // DOM Elements
+  const slider = document.getElementById('card-scale-slider') as HTMLInputElement;
+  const card = document.getElementById('calibration-card') as HTMLDivElement;
+  const widthLabel = document.getElementById('card-width-px') as HTMLSpanElement;
+
+  const diagDiagonal = document.getElementById('diag-diagonal') as HTMLSpanElement;
+  const diagDevice = document.getElementById('diag-device') as HTMLSpanElement;
+  const diagDpr = document.getElementById('diag-dpr') as HTMLSpanElement;
+  const diagRes = document.getElementById('diag-res') as HTMLSpanElement;
+  const diagView = document.getElementById('diag-view') as HTMLSpanElement;
+  const diagPpi = document.getElementById('diag-ppi') as HTMLSpanElement;
+  const diagTouch = document.getElementById('diag-touch') as HTMLSpanElement;
+
+  const currentPpiLabel = document.getElementById('current-ppi-label') as HTMLSpanElement;
+  const blueprintRatioInput = document.getElementById('blueprint-ratio') as HTMLInputElement;
+  const measurePad = document.getElementById('measure-pad') as HTMLDivElement;
+  const measurePadInstructions = document.getElementById('measure-pad-instructions') as HTMLDivElement;
+  const measureSvg = document.getElementById('measure-svg') as unknown as SVGSVGElement;
+  const measureLine = document.getElementById('measure-line') as unknown as SVGLineElement;
+  const measureDot1 = document.getElementById('measure-dot1') as unknown as SVGCircleElement;
+  const measureDot2 = document.getElementById('measure-dot2') as unknown as SVGCircleElement;
+
+  const outputScreenDistance = document.getElementById('output-screen-distance') as HTMLSpanElement;
+  const outputScaledDistance = document.getElementById('output-scaled-distance') as HTMLSpanElement;
+
+  // State parameters
+  let ppi = 96; // Fallback default PPI
+  let cardWidthPx = 300;
+  
+  // Interactive measuring points
+  let firstPoint: { x: number; y: number } | null = null;
+  let secondPoint: { x: number; y: number } | null = null;
+
+  // Initialize specs and localStorage
+  function initSpecs() {
+    // DPR
+    const dpr = window.devicePixelRatio || 1;
+    diagDpr.textContent = `${dpr.toFixed(2)}`;
+
+    // Screen Dimensions
+    const screenWidth = window.screen.width * dpr;
+    const screenHeight = window.screen.height * dpr;
+    diagRes.textContent = `${screenWidth} × ${screenHeight}`;
+
+    // Viewport size in CSS pixels
+    diagView.textContent = `${window.innerWidth} × ${window.innerHeight}`;
+
+    // Touch Support
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    diagTouch.textContent = isTouch ? 'Yes' : 'No';
+
+    // Estimate Device Type
+    const ua = navigator.userAgent.toLowerCase();
+    let deviceName = 'Desktop';
+    if (ua.includes('iphone')) deviceName = 'iPhone';
+    else if (ua.includes('ipad')) deviceName = 'iPad';
+    else if (ua.includes('android') && ua.includes('mobile')) deviceName = 'Android Mobile';
+    else if (ua.includes('android')) deviceName = 'Android Tablet';
+    else if (ua.includes('macintosh')) deviceName = 'macOS Desktop';
+    else if (ua.includes('windows')) deviceName = 'Windows Desktop';
+    diagDevice.textContent = deviceName;
+
+    // Load from localstorage if possible
+    const savedPpi = localStorage.getItem('calibrated-ppi');
+    if (savedPpi) {
+      ppi = Number(savedPpi);
+      // Re-calculate slider and card width in px
+      // ppi = width_px / 3.37 => width_px = ppi * 3.37
+      cardWidthPx = Math.round(ppi * CARD_WIDTH_INCHES);
+      slider.value = String(cardWidthPx);
+    } else {
+      // Estimate general starting PPI based on device category
+      if (deviceName.includes('iPhone')) ppi = 160; // Estimated CSS PPI
+      else if (deviceName.includes('Android Mobile')) ppi = 150;
+      else if (deviceName.includes('iPad')) ppi = 132;
+      else ppi = 96; // Standard desktop CSS PPI
+      
+      cardWidthPx = Math.round(ppi * CARD_WIDTH_INCHES);
+      slider.value = String(cardWidthPx);
+    }
+
+    updateCalibration();
+  }
+
+  function updateCalibration() {
+    cardWidthPx = Number(slider.value) || 300;
+    
+    // Scale on-screen card outline
+    card.style.width = `${cardWidthPx}px`;
+    card.style.height = `${Math.round(cardWidthPx * CARD_ASPECT_RATIO)}px`;
+    widthLabel.textContent = `${cardWidthPx} px`;
+
+    // Calculate actual PPI from width
+    ppi = cardWidthPx / CARD_WIDTH_INCHES;
+    diagPpi.textContent = `${ppi.toFixed(1)} ppi`;
+    currentPpiLabel.textContent = `${ppi.toFixed(1)} ppi`;
+
+    // Save to localStorage
+    localStorage.setItem('calibrated-ppi', String(ppi));
+
+    // Calculate screen diagonal
+    // Screen diagonal in pixels = sqrt(screen.width^2 + screen.height^2)
+    // Screen diagonal in inches = diagonal_pixels / ppi
+    const diagPx = Math.sqrt(Math.pow(window.screen.width, 2) + Math.pow(window.screen.height, 2));
+    const diagonalInches = diagPx / ppi;
+    diagDiagonal.textContent = `${diagonalInches.toFixed(1)}″`;
+
+    // Re-evaluate current measurements with new PPI
+    calculateMeasurements();
+  }
+
+  function calculateMeasurements() {
+    if (firstPoint && secondPoint) {
+      const dx = secondPoint.x - firstPoint.x;
+      const dy = secondPoint.y - firstPoint.y;
+      const pixelDistance = Math.sqrt(dx * dx + dy * dy);
+
+      // Distance in physical screen inches
+      const inches = pixelDistance / ppi;
+      outputScreenDistance.textContent = `${inches.toFixed(2)}″`;
+
+      // Scale value
+      const scaleFeetPerInch = Number(blueprintRatioInput.value) || 5;
+      const feet = inches * scaleFeetPerInch;
+      outputScaledDistance.textContent = `${feet.toFixed(1)} ft`;
+    } else {
+      outputScreenDistance.textContent = `-- inches`;
+      outputScaledDistance.textContent = `-- feet`;
+    }
+  }
+
+  // Handle crosshair taps on the pad
+  measurePad?.addEventListener('click', (e) => {
+    // Avoid running if clicking standard buttons inside (if any)
+    const rect = measurePad.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (!firstPoint || (firstPoint && secondPoint)) {
+      // Set first point
+      firstPoint = { x, y };
+      secondPoint = null;
+
+      // Hide line & second dot, show first dot
+      measureDot1.setAttribute('cx', String(x));
+      measureDot1.setAttribute('cy', String(y));
+      measureDot1.classList.remove('hidden');
+
+      measureDot2.classList.add('hidden');
+      measureLine.classList.add('hidden');
+      measurePadInstructions.classList.add('hidden');
+      
+      calculateMeasurements();
+    } else {
+      // Set second point
+      secondPoint = { x, y };
+
+      // Show second dot & trace line
+      measureDot2.setAttribute('cx', String(x));
+      measureDot2.setAttribute('cy', String(y));
+      measureDot2.classList.remove('hidden');
+
+      measureLine.setAttribute('x1', String(firstPoint.x));
+      measureLine.setAttribute('y1', String(firstPoint.y));
+      measureLine.setAttribute('x2', String(x));
+      measureLine.setAttribute('y2', String(y));
+      measureLine.classList.remove('hidden');
+
+      calculateMeasurements();
+    }
+  });
+
+  // Handle window resizing to keep viewport diagnostics active
+  window.addEventListener('resize', () => {
+    diagView.textContent = `${window.innerWidth} × ${window.innerHeight}`;
+  });
+
+  // Attach sliders and events
+  slider?.addEventListener('input', updateCalibration);
+  blueprintRatioInput?.addEventListener('input', calculateMeasurements);
+
+  // Initialize
+  initSpecs();
+</script>
+

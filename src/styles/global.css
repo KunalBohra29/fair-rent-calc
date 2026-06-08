@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Primary Brand Colors ── */
+  --color-primary: #171717;
+  --color-on-primary: #ffffff;
+  --color-ink: #171717;
+
+  /* ── Text Colors ── */
+  --color-body: #4d4d4d;
+  --color-mute: #888888;
+
+  /* ── Surface Colors ── */
+  --color-canvas: #ffffff;
+  --color-canvas-soft: #fafafa;
+  --color-canvas-soft-2: #f5f5f5;
+
+  /* ── Border Colors ── */
+  --color-hairline: #ebebeb;
+  --color-hairline-strong: #a1a1a1;
+
+  /* ── Semantic Colors ── */
+  --color-link: #0070f3;
+  --color-link-deep: #0761d1;
+  --color-link-bg-soft: #d3e5ff;
+
+  --color-success: #0070f3;
+
+  --color-warning: #f5a623;
+  --color-warning-soft: #ffefcf;
+  --color-warning-deep: #ab570a;
+
+  --color-error: #ee0000;
+  --color-error-soft: #f7d4d6;
+  --color-error-deep: #c50000;
+
+  /* ── Accent & Brand Colors ── */
+  --color-violet: #7928ca;
+  --color-violet-soft: #d8ccf1;
+  --color-violet-deep: #4c2889;
+  --color-cyan: #50e3c2;
+  --color-cyan-soft: #aaffec;
+  --color-cyan-deep: #29bc9b;
+  --color-highlight-pink: #ff0080;
+  --color-highlight-magenta: #eb367f;
+
+  /* ── Brand Gradient Stops ── */
+  --color-gradient-develop-start: #007cf0;
+  --color-gradient-develop-end: #00dfd8;
+  --color-gradient-preview-start: #7928ca;
+  --color-gradient-preview-end: #ff0080;
+  --color-gradient-ship-start: #ff4d4d;
+  --color-gradient-ship-end: #f9cb28;
+
+  /* ── Typography ── */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* ── Letter Spacing Scale (Vercel negative tracking) ── */
+  --tracking-display-xl: -0.05em;   /* -2.4px at 48px hero */
+  --tracking-display-lg: -0.04em;   /* -1.28px at 32px section */
+  --tracking-display-md: -0.04em;   /* -0.96px at 24px */
+  --tracking-display-sm: -0.03em;   /* -0.6px at 20px */
+  --tracking-body-sm:    -0.02em;   /* -0.28px at 14px */
+
+  /* ── Border Radius Scale ── */
+  --radius-xs:      4px;
+  --radius-sm:      6px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --radius-xl:      16px;
+  --radius-pill-sm: 64px;
+  --radius-pill:    100px;
+
+  /* ── Animation ── */
+  --animate-fade-in: fade-in 0.15s ease-out;
+  --animate-slide-up: slide-up 0.2s ease-out;
+}
+
+/* ── Keyframes ── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* ── Base Layer ── */
+@layer base {
+  html,
+  body {
+    background-color: var(--color-canvas-soft);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-canvas);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* ── Stacked Vercel Shadow Utilities ── */
+.shadow-level-1 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-level-2 {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.02),
+    0 2px 2px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-level-3 {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 2px 2px rgba(0, 0, 0, 0.04),
+    0 8px 8px -8px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-level-4 {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 2px 2px rgba(0, 0, 0, 0.04),
+    0 8px 16px -4px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-level-5 {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.02),
+    0 8px 16px -4px rgba(0, 0, 0, 0.06),
+    0 24px 32px -8px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Atmospheric Hero Mesh Gradient ── */
+.mesh-gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  max-width: 1600px;
+  height: 640px;
+  background-image:
+    radial-gradient(ellipse at 27% 37%, hsla(215, 98%, 61%, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 97% 21%, hsla(256, 98%, 72%, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse at 52% 99%, hsla(339, 49%, 69%, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 60%, hsla(142, 98%, 78%, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 97% 80%, hsla(38,  98%, 74%, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 33% 50%, hsla(222, 90%, 55%, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 79% 53%, hsla(343, 68%, 79%, 0.06) 0%, transparent 55%);
+  filter: blur(64px);
+  z-index: -10;
+  pointer-events: none;
+  opacity: 0.9;
+  contain: paint;
+}
+
+/* ── Range Slider Styling ── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-hairline);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 0 0 3px rgba(23, 23, 23, 0.08);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 4px rgba(23, 23, 23, 0.12);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  box-shadow: 0 0 0 3px rgba(23, 23, 23, 0.08);
+}
+
+/* ── Focus Ring ── */
+.focus-visible-vercel:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Dark Mode ── */
+.dark {
+  --color-primary: #ededed;
+  --color-on-primary: #0a0a0a;
+  --color-ink: #ededed;
+  --color-body: #a1a1a1;
+  --color-mute: #666666;
+  --color-canvas: #0a0a0a;
+  --color-canvas-soft: #111111;
+  --color-canvas-soft-2: #1a1a1a;
+  --color-hairline: #2a2a2a;
+  --color-hairline-strong: #555555;
+  --color-link: #3291ff;
+  --color-link-deep: #5ba4ff;
+  --color-link-bg-soft: #1a2a3a;
+  --color-success: #3291ff;
+  --color-warning: #f5a623;
+  --color-warning-soft: #2a2010;
+  --color-warning-deep: #f5c66a;
+  --color-error: #ee0000;
+  --color-error-soft: #2a1010;
+  --color-error-deep: #ff4444;
+  --color-violet: #a855f7;
+  --color-violet-soft: #2a1a3a;
+  --color-violet-deep: #c084fc;
+  --color-cyan: #50e3c2;
+  --color-cyan-soft: #0a2a20;
+  --color-cyan-deep: #6ee7b7;
+  --color-highlight-pink: #ff0080;
+  --color-highlight-magenta: #eb367f;
+}
+
+.dark .shadow-level-1 {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.dark .shadow-level-2 {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.3),
+    0 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.dark .shadow-level-3 {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 2px 2px rgba(0, 0, 0, 0.4),
+    0 8px 8px -8px rgba(0, 0, 0, 0.5);
+}
+
+.dark .shadow-level-4 {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 2px 2px rgba(0, 0, 0, 0.4),
+    0 8px 16px -4px rgba(0, 0, 0, 0.5);
+}
+
+.dark .shadow-level-5 {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.3),
+    0 8px 16px -4px rgba(0, 0, 0, 0.5),
+    0 24px 32px -8px rgba(0, 0, 0, 0.6);
+}
+
+.dark .mesh-gradient-bg {
+  opacity: 0.5;
+}
+
+.dark input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.dark input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.18);
+}
+
+.dark input[type="range"]::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+/* ── Chart Bar Gradients (used in JS-rendered split bars) ── */
+.bar-color-0 { background: linear-gradient(to right, var(--color-gradient-develop-start), var(--color-gradient-develop-end)); }
+.bar-color-1 { background: linear-gradient(to right, var(--color-gradient-preview-start), var(--color-gradient-preview-end)); }
+.bar-color-2 { background: linear-gradient(to right, var(--color-gradient-ship-start), var(--color-gradient-ship-end)); }
+.bar-color-3 { background: linear-gradient(to right, var(--color-violet), var(--color-highlight-pink)); }
+.bar-color-4 { background: linear-gradient(to right, var(--color-cyan-deep), var(--color-gradient-develop-end)); }
+
+/* ── Reduced Motion Support ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
