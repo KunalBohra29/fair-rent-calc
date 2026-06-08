@@ -186,6 +186,48 @@ const isCurrent = (path: string) => {
         Listing Evaluator
       </a>
       <div class="h-[1px] bg-hairline my-2"></div>
+      <!-- Legal & Info Links -->
+      <a 
+        href="/about" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/about') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+      >
+        About Us
+      </a>
+      <a 
+        href="/contact" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/contact') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+      >
+        Contact
+      </a>
+      <a 
+        href="/privacy" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/privacy') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+      >
+        Privacy Policy
+      </a>
+      <a 
+        href="/terms" 
+        class={`px-4 py-2.5 text-sm font-medium rounded-sm transition-colors ${
+          isCurrent('/terms') 
+            ? 'bg-canvas-soft-2 text-ink font-semibold' 
+            : 'text-body hover:bg-canvas-soft'
+        }`}
+      >
+        Terms & Conditions
+      </a>
+      <div class="h-[1px] bg-hairline my-2"></div>
       <!-- Mobile Language & Theme Row -->
       <div class="flex items-center gap-2 px-2 pt-2">
         <select id="mobile-lang-select" class="flex-1 h-9 px-2 border border-hairline rounded-sm text-xs text-ink bg-canvas focus-visible-vercel">
