@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="500 — Server Error | Fairrentcalc"
+  description="Something went wrong on our end. Please try again later."
+  canonicalUrl="https://fairrentcalc.com/500"
+>
+  <section class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+    <span class="font-mono text-6xl md:text-8xl font-semibold text-hairline-strong select-none">
+      500
+    </span>
+    <h1 class="mt-6 text-2xl md:text-3xl font-semibold tracking-display-lg text-ink">
+      Something went wrong
+    </h1>
+    <p class="mt-4 text-sm md:text-base text-body max-w-md leading-relaxed">
+      An unexpected error occurred on our end. Please try again in a moment. If the issue persists, contact us for help.
+    </p>
+    <div class="mt-8 flex flex-col sm:flex-row items-center gap-3">
+      <a
+        href="/"
+        class="h-10 px-6 flex items-center justify-center bg-primary hover:bg-ink text-on-primary font-medium rounded-pill shadow-level-2 transition-all focus-visible-vercel text-sm"
+      >
+        Go to Homepage
+      </a>
+      <button
+        onclick="location.reload()"
+        class="h-10 px-6 flex items-center justify-center bg-canvas hover:bg-canvas-soft text-ink font-medium rounded-pill border border-hairline shadow-level-1 transition-all focus-visible-vercel text-sm"
+      >
+        Try Again
+      </button>
+    </div>
+  </section>
+</Layout>
