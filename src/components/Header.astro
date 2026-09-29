@@ -96,6 +96,9 @@ const isCurrent = (path: string) => {
           <button data-lang="zh" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
             <span class="text-xs">🇨🇳</span> 中文
           </button>
+          <button data-lang="it" class="lang-option w-full px-3 py-2 text-left text-sm text-body hover:bg-canvas-soft transition-colors flex items-center gap-2">
+            <span class="text-xs">🇮🇹</span> Italiano
+          </button>
         </div>
       </div>
 
@@ -237,6 +240,7 @@ const isCurrent = (path: string) => {
           <option value="de">🇩🇪 Deutsch</option>
           <option value="hi">🇮🇳 हिन्दी</option>
           <option value="zh">🇨🇳 中文</option>
+          <option value="it">🇮🇹 Italiano</option>
         </select>
         <button 
           id="mobile-theme-toggle"
@@ -294,7 +298,8 @@ const isCurrent = (path: string) => {
       fr: { 'nav.splitter': 'Répartiteur de Loyer', 'nav.calibrator': 'Calibrateur d\'Appareil', 'nav.evaluator': 'Évaluateur d\'Annonces', 'nav.calibrate': 'Calibrer l\'Écran', 'nav.calculate': 'Calculer Maintenant' },
       de: { 'nav.splitter': 'Mietenteiler', 'nav.calibrator': 'Gerätekalibrierer', 'nav.evaluator': 'Inseratsbewerter', 'nav.calibrate': 'Bildschirm kalibrieren', 'nav.calculate': 'Jetzt berechnen' },
       hi: { 'nav.splitter': 'किराया विभाजक', 'nav.calibrator': 'डिवाइस कैलिब्रेटर', 'nav.evaluator': 'लिस्टिंग मूल्यांकनकर्ता', 'nav.calibrate': 'स्क्रीन कैलिब्रेट करें', 'nav.calculate': 'अभी गणना करें' },
-      zh: { 'nav.splitter': '租金分割器', 'nav.calibrator': '设备校准器', 'nav.evaluator': '房源评估器', 'nav.calibrate': '校准屏幕', 'nav.calculate': '立即计算' }
+      zh: { 'nav.splitter': '租金分割器', 'nav.calibrator': '设备校准器', 'nav.evaluator': '房源评估器', 'nav.calibrate': '校准屏幕', 'nav.calculate': '立即计算' },
+      it: { 'nav.splitter': "Divisore d'Affitto", 'nav.calibrator': 'Calibratore Dispositivo', 'nav.evaluator': 'Valutatore Annunci', 'nav.calibrate': 'Calibra Schermo', 'nav.calculate': 'Calcola Ora' }
     };
 
     function applyHeaderTranslations(lang: string) {

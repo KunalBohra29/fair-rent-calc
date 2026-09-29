@@ -198,7 +198,7 @@ import Layout from '../layouts/Layout.astro';
               </div>
             </div>
             <div class="text-right">
-              <span class="text-[10px] font-mono text-hairline-strong uppercase block">Estimated Fair Rent</span>
+              <span class="text-[10px] font-mono text-hairline-strong uppercase block" data-i18n="evaluate.fair.rent">Estimated Fair Rent</span>
               <div id="fair-rent-label" class="text-2xl font-semibold text-link tabular-nums mt-1">
                 --
               </div>
@@ -207,7 +207,7 @@ import Layout from '../layouts/Layout.astro';
 
           <!-- Explanation meter details -->
           <div class="space-y-4">
-            <span class="block text-xs font-mono font-medium text-hairline-strong uppercase">
+            <span class="block text-xs font-mono font-medium text-hairline-strong uppercase" data-i18n="evaluate.diagnostic">
               Income Affordability Diagnostic
             </span>
             <div class="flex items-center gap-3">
@@ -227,26 +227,26 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Live comparison chart block -->
     <div class="mt-8 bg-canvas border border-hairline rounded-md p-6 shadow-level-2">
-      <h2 class="text-lg font-semibold tracking-display-md text-ink mb-6 pb-3 border-b border-hairline">
+      <h2 class="text-lg font-semibold tracking-display-md text-ink mb-6 pb-3 border-b border-hairline" data-i18n="evaluate.comparison.title">
         Listing Cost vs. Estimated Market Fair Value
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <!-- Text details -->
         <div class="space-y-4">
-          <p class="text-sm text-body leading-relaxed">
+          <p class="text-sm text-body leading-relaxed" data-i18n="evaluate.comparison.desc">
             We evaluate the listed monthly price against the physical attributes of the apartment. Our model computes the base rent by multiplying square footage by location-tier coefficient, then adds custom market-average surcharges for utility/amenity packages.
           </p>
           <div class="space-y-2 text-xs font-mono">
             <div class="flex justify-between border-b border-hairline pb-1.5">
-              <span class="text-mute">Listed Rent per SQFT:</span>
+              <span class="text-mute" data-i18n="evaluate.comparison.listed">Listed Rent per SQFT:</span>
               <span id="output-listed-sqft" class="text-ink font-semibold tabular-nums">--</span>
             </div>
             <div class="flex justify-between border-b border-hairline pb-1.5">
-              <span class="text-mute">Fair Value per SQFT:</span>
+              <span class="text-mute" data-i18n="evaluate.comparison.fair">Fair Value per SQFT:</span>
               <span id="output-fair-sqft" class="text-ink font-semibold tabular-nums">--</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-mute">Value Variance:</span>
+              <span class="text-mute" data-i18n="evaluate.comparison.variance">Value Variance:</span>
               <span id="output-variance" class="text-ink font-semibold tabular-nums">--</span>
             </div>
           </div>
@@ -254,24 +254,24 @@ import Layout from '../layouts/Layout.astro';
 
         <!-- Comparative progress meter -->
         <div class="p-6 bg-canvas-soft-2 border border-hairline rounded-sm space-y-4">
-          <span class="block text-xs font-mono font-medium text-hairline-strong uppercase">
+          <span class="block text-xs font-mono font-medium text-hairline-strong uppercase" data-i18n="evaluate.meter.title">
             Market Comparison Meter
           </span>
           <div class="w-full h-4 bg-canvas border border-hairline rounded-full relative overflow-hidden flex">
             <!-- Steal block (green/blue color range) -->
-            <div class="h-full bg-link/10 w-1/3 border-r border-hairline flex items-center justify-center text-[9px] font-mono text-link font-semibold select-none">Steal</div>
+            <div class="h-full bg-link/10 w-1/3 border-r border-hairline flex items-center justify-center text-[9px] font-mono text-link font-semibold select-none" data-i18n="evaluate.meter.steal">Steal</div>
             <!-- Fair block -->
-            <div class="h-full bg-warning/10 w-1/3 border-r border-hairline flex items-center justify-center text-[9px] font-mono text-warning font-semibold select-none font-medium">Fair</div>
+            <div class="h-full bg-warning/10 w-1/3 border-r border-hairline flex items-center justify-center text-[9px] font-mono text-warning font-semibold select-none font-medium" data-i18n="evaluate.meter.fair">Fair</div>
             <!-- Overpriced block -->
-            <div class="h-full bg-error/10 w-1/3 flex items-center justify-center text-[9px] font-mono text-error font-semibold select-none">Overpriced</div>
+            <div class="h-full bg-error/10 w-1/3 flex items-center justify-center text-[9px] font-mono text-error font-semibold select-none" data-i18n="evaluate.meter.over">Overpriced</div>
             
             <!-- Indicator Pin dot -->
             <div id="meter-pin" class="absolute top-0 bottom-0 w-2 bg-ink border-x border-canvas transition-all duration-300 shadow-level-2" style="left: 50%;"></div>
           </div>
           <div class="flex justify-between text-[10px] font-mono text-mute">
-            <span>-20% Underpriced</span>
-            <span>Market Fair</span>
-            <span>+20% Overpriced</span>
+            <span data-i18n="evaluate.meter.under">-20% Underpriced</span>
+            <span data-i18n="evaluate.meter.center">Market Fair</span>
+            <span data-i18n="evaluate.meter.over2">+20% Overpriced</span>
           </div>
         </div>
       </div>
@@ -318,6 +318,10 @@ import Layout from '../layouts/Layout.astro';
   const outputVariance = document.getElementById('output-variance') as HTMLSpanElement;
   const meterPin = document.getElementById('meter-pin') as HTMLDivElement;
 
+  function t(key: string, fallback: string): string {
+    return (window as any).t ? (window as any).t(key) : fallback;
+  }
+
   function evaluate() {
     const income = Math.max(0, Number(incomeInput.value) || 0);
     const listingPrice = Math.max(0, Number(listingPriceInput.value) || 0);
@@ -359,47 +363,45 @@ import Layout from '../layouts/Layout.astro';
 
     // Variance badge mapping
     if (variancePercent < -10) {
-      valuationLabel.textContent = 'Underpriced (Great Deal)';
+      valuationLabel.textContent = t('evaluate.meter.steal', 'Underpriced (Great Deal)');
       valuationLabel.className = 'text-xl font-semibold tracking-display-sm text-link mt-1';
     } else if (variancePercent > 10) {
-      valuationLabel.textContent = 'Overpriced (High Premium)';
+      valuationLabel.textContent = t('evaluate.meter.over', 'Overpriced (High Premium)');
       valuationLabel.className = 'text-xl font-semibold tracking-display-sm text-error mt-1';
     } else {
-      valuationLabel.textContent = 'Fair Market Value';
+      valuationLabel.textContent = t('evaluate.meter.fair', 'Fair Market Value');
       valuationLabel.className = 'text-xl font-semibold tracking-display-sm mt-1';
       valuationLabel.style.color = 'var(--color-warning-deep)';
     }
 
     if (variancePercent < 0) {
-      outputVariance.textContent = `${Math.abs(variancePercent).toFixed(1)}% Under Market`;
+      outputVariance.textContent = `${Math.abs(variancePercent).toFixed(1)}% ${t('evaluate.meter.under', 'Under Market')}`;
       outputVariance.className = 'text-link font-semibold tabular-nums';
     } else if (variancePercent > 0) {
-      outputVariance.textContent = `${variancePercent.toFixed(1)}% Over Market`;
+      outputVariance.textContent = `${variancePercent.toFixed(1)}% ${t('evaluate.meter.over2', 'Over Market')}`;
       outputVariance.className = 'text-error font-semibold tabular-nums';
     } else {
-      outputVariance.textContent = '0% (Exact Match)';
+      outputVariance.textContent = '0%';
       outputVariance.className = 'text-body font-semibold tabular-nums';
     }
 
     // Set pin position in meter
-    // Center is 50%. Let's map -20% to +20% range to 0% to 100%.
-    // clamped position = 50 + (variancePercent * 2.5) -> since 20 * 2.5 = 50.
     const pinPos = Math.max(0, Math.min(100, 50 + (variancePercent * 2.5)));
     meterPin.style.left = `${pinPos}%`;
 
     // 4. Calculate group income feasibility status
     if (listingPrice <= safeRent) {
-      affordabilityBadge.textContent = 'Affordable';
+      affordabilityBadge.textContent = t('evaluate.diagnostic.affordable', 'Affordable');
       affordabilityBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-link/10 text-link select-none';
-      affordabilityExplanation.textContent = 'This apartment fits comfortably within your group’s 30% monthly gross income threshold.';
+      affordabilityExplanation.textContent = t('evaluate.diagnostic.affordable.desc', 'This apartment fits comfortably within your group’s 30% monthly gross income threshold.');
     } else if (listingPrice <= stretchedRent) {
-      affordabilityBadge.textContent = 'Stretched';
+      affordabilityBadge.textContent = t('evaluate.diagnostic.stretched', 'Stretched');
       affordabilityBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-warning-soft text-warning-deep select-none';
-      affordabilityExplanation.textContent = 'Rent is stretching your budget, occupying between 30% and 40% of gross monthly income.';
+      affordabilityExplanation.textContent = t('evaluate.diagnostic.stretched.desc', 'Rent is stretching your budget, occupying between 30% and 40% of gross monthly income.');
     } else {
-      affordabilityBadge.textContent = 'High Burden';
+      affordabilityBadge.textContent = t('evaluate.diagnostic.highBurden', 'High Burden');
       affordabilityBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-error-soft text-error select-none';
-      affordabilityExplanation.textContent = 'Rent exceeds 40% of gross monthly income. Significant risk of rent burden for roommate group.';
+      affordabilityExplanation.textContent = t('evaluate.diagnostic.highBurden.desc', 'Rent exceeds 40% of gross monthly income. Significant risk of rent burden for roommate group.');
     }
   }
 
@@ -413,6 +415,10 @@ import Layout from '../layouts/Layout.astro';
   laundryCheck?.addEventListener('change', evaluate);
   gymCheck?.addEventListener('change', evaluate);
   utilitiesCheck?.addEventListener('change', evaluate);
+
+  window.addEventListener('locale-changed', () => {
+    evaluate();
+  });
 
   // Initial calculation
   evaluate();

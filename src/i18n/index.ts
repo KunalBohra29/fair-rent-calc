@@ -4,8 +4,9 @@ import fr from './locales/fr.json';
 import de from './locales/de.json';
 import hi from './locales/hi.json';
 import zh from './locales/zh.json';
+import it from './locales/it.json';
 
-export type Locale = 'en' | 'es' | 'fr' | 'de' | 'hi' | 'zh';
+export type Locale = 'en' | 'es' | 'fr' | 'de' | 'hi' | 'zh' | 'it';
 
 export const LOCALES: Record<Locale, { label: string; dir: 'ltr' | 'rtl' }> = {
   en: { label: 'English', dir: 'ltr' },
@@ -14,9 +15,10 @@ export const LOCALES: Record<Locale, { label: string; dir: 'ltr' | 'rtl' }> = {
   de: { label: 'Deutsch', dir: 'ltr' },
   hi: { label: 'हिन्दी', dir: 'ltr' },
   zh: { label: '中文', dir: 'ltr' },
+  it: { label: 'Italiano', dir: 'ltr' },
 };
 
-const translations: Record<Locale, Record<string, string>> = { en, es, fr, de, hi, zh };
+const translations: Record<Locale, Record<string, string>> = { en, es, fr, de, hi, zh, it };
 
 const DEFAULT_LOCALE: Locale = 'en';
 
@@ -86,6 +88,7 @@ export function formatCurrency(amount: number, locale?: Locale): string {
     de: 'USD',
     hi: 'INR',
     zh: 'CNY',
+    it: 'EUR',
   };
   const localeMap: Record<Locale, string> = {
     en: 'en-US',
@@ -94,6 +97,7 @@ export function formatCurrency(amount: number, locale?: Locale): string {
     de: 'de-DE',
     hi: 'hi-IN',
     zh: 'zh-CN',
+    it: 'it-IT',
   };
   return new Intl.NumberFormat(localeMap[lang], {
     style: 'currency',

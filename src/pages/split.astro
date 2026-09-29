@@ -1,4 +1,4 @@
-﻿---
+---
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -321,6 +321,7 @@ import Layout from '../layouts/Layout.astro';
             data-room-id="${room.id}" 
             class="delete-room-btn text-mute hover:text-error text-xs font-semibold focus-visible-vercel rounded-sm px-1.5 py-0.5 transition-colors absolute top-4 right-4"
             aria-label="Delete room"
+            data-i18n="split.room.remove"
           >
             Remove
           </button>
@@ -329,7 +330,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Room Size -->
           <div>
-            <label class="block text-[11px] font-mono text-hairline-strong uppercase mb-1.5">
+            <label class="block text-[11px] font-mono text-hairline-strong uppercase mb-1.5" data-i18n="split.room.size">
               Room Size (sq ft)
             </label>
             <input 
@@ -345,7 +346,7 @@ import Layout from '../layouts/Layout.astro';
 
           <!-- Room Amenities toggles -->
           <div>
-            <label class="block text-[11px] font-mono text-hairline-strong uppercase mb-2">
+            <label class="block text-[11px] font-mono text-hairline-strong uppercase mb-2" data-i18n="split.room.features">
               Features
             </label>
             <div class="grid grid-cols-2 gap-2">
@@ -357,7 +358,7 @@ import Layout from '../layouts/Layout.astro';
                   data-field="hasBath" 
                   class="room-checkbox accent-ink rounded-sm focus-visible-vercel" 
                 />
-                Bath
+                <span data-i18n="split.room.bath">Bath</span>
               </label>
               <label class="flex items-center gap-1.5 text-xs text-body cursor-pointer">
                 <input 
@@ -367,7 +368,7 @@ import Layout from '../layouts/Layout.astro';
                   data-field="hasBalcony" 
                   class="room-checkbox accent-ink rounded-sm focus-visible-vercel" 
                 />
-                Balcony
+                <span data-i18n="split.room.balcony">Balcony</span>
               </label>
               <label class="flex items-center gap-1.5 text-xs text-body cursor-pointer">
                 <input 
@@ -377,7 +378,7 @@ import Layout from '../layouts/Layout.astro';
                   data-field="hasCloset" 
                   class="room-checkbox accent-ink rounded-sm focus-visible-vercel" 
                 />
-                Closet
+                <span data-i18n="split.room.closet">Closet</span>
               </label>
               <label class="flex items-center gap-1.5 text-xs text-body cursor-pointer">
                 <input 
@@ -387,7 +388,7 @@ import Layout from '../layouts/Layout.astro';
                   data-field="hasWindow" 
                   class="room-checkbox accent-ink rounded-sm focus-visible-vercel" 
                 />
-                Window
+                <span data-i18n="split.room.window">Window</span>
               </label>
             </div>
           </div>
@@ -443,6 +444,10 @@ import Layout from '../layouts/Layout.astro';
         calculateSplits();
       });
     });
+
+    if (typeof (window as any).applyTranslations === 'function') {
+      (window as any).applyTranslations();
+    }
   }
 
   function calculateSplits() {
@@ -499,7 +504,6 @@ import Layout from '../layouts/Layout.astro';
     // Adjust for fractional/rounding issues so sum is exactly totalRent
     const diff = totalRent - calculatedSplitsSum;
     if (Math.abs(diff) > 0.001 && roomShares.length > 0) {
-      // Add rounding residue to the largest room or first room
       roomShares[0].totalShare += diff;
       roomShares[0].baseShare += diff;
     }
@@ -515,10 +519,11 @@ import Layout from '../layouts/Layout.astro';
     // Render Detailed Table Rows
     detailedTableBody.innerHTML = '';
     if (roomShares.length === 0) {
+      const emptyText = (window as any).t ? (window as any).t('split.empty') : 'No rooms added. Click "+ Add Room" above to begin.';
       detailedTableBody.innerHTML = `
         <tr>
           <td colspan="6" class="px-6 py-8 text-center text-mute font-mono text-xs">
-            No rooms added. Click "+ Add Room" above to begin.
+            ${emptyText}
           </td>
         </tr>
       `;
@@ -541,9 +546,10 @@ import Layout from '../layouts/Layout.astro';
     // Render Visual Bars Chart
     chartContainer.innerHTML = '';
     if (roomShares.length === 0) {
+      const noRecordsText = (window as any).t ? (window as any).t('split.no.records') : 'No records.';
       chartContainer.innerHTML = `
         <div class="text-xs text-mute font-mono py-2">
-          No records.
+          ${noRecordsText}
         </div>
       `;
     } else {
@@ -590,6 +596,11 @@ import Layout from '../layouts/Layout.astro';
   weightBalconyInput?.addEventListener('input', calculateSplits);
   weightClosetInput?.addEventListener('input', calculateSplits);
   weightWindowInput?.addEventListener('input', calculateSplits);
+
+  window.addEventListener('locale-changed', () => {
+    renderRooms();
+    calculateSplits();
+  });
 
   // Initialize
   renderRooms();
