@@ -28,6 +28,15 @@ const allTranslations = { en, es, fr, de, hi, zh, it };
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8JYYV57TR"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-G8JYYV57TR');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -172,15 +181,6 @@ const allTranslations = { en, es, fr, de, hi, zh, it };
       }
     </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CM8TP80P6B"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-CM8TP80P6B');
-    </script>
   </head>
   <body class="flex flex-col min-h-screen bg-canvas-soft text-ink font-sans antialiased selection:bg-ink selection:text-canvas">
     <!-- Skip navigation link for accessibility compliance -->
@@ -245,7 +245,5 @@ const allTranslations = { en, es, fr, de, hi, zh, it };
         });
       })();
     </script>
-  </body>
-</html>
   </body>
 </html>
